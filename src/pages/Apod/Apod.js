@@ -1,12 +1,11 @@
-import React, { Component }  from "react";
+import React, { PureComponent } from 'react';
 
-export default class Apod extends Component{
-    constructor(){
-        super();
-    }
-    render(){
-        return(
-            <div></div>
-        );
-    }
+export default class Apod extends PureComponent {
+  render() {
+    return (
+      <div>
+        
+      </div>
+    );
+  }
 }

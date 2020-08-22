@@ -1,9 +1,14 @@
 import React from 'react';
 import {
-  Alert, Divider, Typography, Button,
+  Divider, Typography, Button, message,
 } from 'antd';
 import { MeteorRainLoading } from 'react-loadingg';
-import './Main.css';
+import { Link } from 'react-router-dom';
+
+import { Loading } from '../../utils/styles/general';
+import {
+  Content, ContentTitle, Apod, ApodImage, ApodInfo, WelcomeTitle,
+} from './styles';
 
 const { Text } = Typography;
 
@@ -13,107 +18,86 @@ export default class Main extends React.Component {
     this.state = {
       main: {},
       loader: true,
-      status: true,
     };
   }
 
   componentDidMount() {
-    var year = new Date().getFullYear();
-    var day = new Date().getDate();
-    var moth = new Date().getMonth() + 1;
-    console.log(year + "-" + moth + "-" + day)
-    fetch(`https://api.nasa.gov/planetary/apod?api_key=g5EOHFgzk1FTPU1LqDOOeAfC5d1agD4hFM6FTC4a&start_date=${year}-${moth}-${day}&end_date=${year}-${moth}-${day}`)
+    const date = Intl.DateTimeFormat('en-GB')
+      .format(new Date())
+      .split('/')
+      .reverse()
+      .join('-');
+
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=g5EOHFgzk1FTPU1LqDOOeAfC5d1agD4hFM6FTC4a&start_date=${date}&end_date=${date}`)
       .then((res) => res.json())
       .then((res) => {
-        if (res.code === 404) {
-          this.setState({
-            loader: false,
-            status: false,
-          });
-        } else {
+        if (res.code !== 404) {
           this.setState({
             main: res[0],
-            loader: false,
           });
         }
       })
       .catch((err) => {
+        message.error('Algo deu errado. Fale conosco ');
+        console.err(err);
+      })
+      .finally(() => {
         this.setState({
           loader: false,
-          status: false,
         });
-        console.log(err)
       });
   }
 
   render() {
-    const { loader, status, main } = this.state;
+    const { loader, main } = this.state;
 
     if (loader) {
       return (
-        <MeteorRainLoading color="#ffb400" />
+        <Loading>
+          <MeteorRainLoading color="#ffb400" />
+        </Loading>
       );
     }
+    return (
+      <Content>
+        <ContentTitle>
+          Welcome, Hunter
+        </ContentTitle>
 
-    if (status) {
-      return (
-        <div className="content">
-          <h1>
-            Welcome, Hunter
-          </h1>
+        <Apod>
+          <ApodImage
+            src={main.url}
+            alt="of day"
+          />
 
-          <div className="apod">
-            <img
-              src={main.url}
-              className="day"
-              alt="of day"
-            />
+          <ApodInfo style={{ margin: '20px' }}>
+            <Text type="secondary">
+              Astronomy Picture of the Day: &nbsp;
+              { main.title }
+            </Text>
 
-            <div style={{ margin: '20px' }} className="info">
-              <Text type="secondary">
-                Astronomy Picture of the Day: &nbsp; 
-                {main.title}
-              </Text>
+            <br />
 
-              <br />
+            <Text type="warning">
+              { main.copyright }
+            </Text>
 
-              <Text type="warning">
-                {main.copyright}
-              </Text>
-
+            <Link to="/apod">
               <Button type="primary">
                 More
               </Button>
-            </div>
-          </div>
-
-          <Divider />
-
-          <div className="welcome">
-            <h2>
-              What you can find here
-            </h2>
-            <div className="painels" />
-            <div className="painels" />
-            <div className="painels" />
-            <div className="painels" />
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="content">
-        <div className="notfound">
-          <Alert
-            type="warning"
-            message="Warning"
-            description="Sorry, we did not get the image of the day due to time zone issues with the Nasa server, but we are working on a solution, in the meantime try to access it during daytime hours 🤓👍."
-          />
-        </div>
+            </Link>
+          </ApodInfo>
+        </Apod>
 
         <Divider />
-      </div>
+
+        <div>
+          <WelcomeTitle>
+            What you can find here
+          </WelcomeTitle>
+        </div>
+      </Content>
     );
   }
 }
