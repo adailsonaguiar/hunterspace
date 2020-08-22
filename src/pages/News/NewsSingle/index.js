@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MeteorRainLoading } from "react-loadingg";
-import Markdown from "react-markdown";
+import { MeteorRainLoading } from 'react-loadingg';
+import Markdown from 'react-markdown';
 
-import './index.css';
-import news from '../../../utils/news';
+import api from '../../../utils/news';
+import { Container } from '../../../utils/styles/general';
+import {
+  NewsMore, NewsBanner, NewsTitle, NewsSubtitle, NewsContent,
+} from './styles';
 
 class NewsSingle extends Component {
   constructor() {
@@ -19,10 +22,9 @@ class NewsSingle extends Component {
   componentDidMount() {
     const { match: { params } } = this.props;
 
-    news.get(`/articles/${params.id}`)
+    api.get(`/articles/${params.id}`)
       .then(({ data: news }) => this.setState({ news, loading: false }))
       .catch(console.error);
-
   }
 
   render() {
@@ -34,38 +36,36 @@ class NewsSingle extends Component {
       author,
       imgToUrl,
     } = news;
-    console.log(news);
-    if (loading) {
-      return (
+
+    return loading
+      ? (
         <div>
-          <MeteorRainLoading/>
+          <MeteorRainLoading />
         </div>
+      )
+      : (
+        <NewsMore>
+          <NewsBanner
+            alt={title}
+            align="center"
+            src={imgToUrl}
+          />
+
+          <Container>
+            <NewsTitle>
+              {title}
+            </NewsTitle>
+
+            <NewsSubtitle>
+              {`${author} - ${new Date(publishedAt).toLocaleDateString()}`}
+            </NewsSubtitle>
+
+            <NewsContent className="news-content">
+              <Markdown source={content} />
+            </NewsContent>
+          </Container>
+        </NewsMore>
       );
-    } else {
-      return (
-        <div className="news-more">
-          <img
-              className="news-banner"
-              alt={title}
-              align="center"
-              src={imgToUrl}
-            />
-          <section className="news-body">
-            <div className="container">
-              <h1 className="news-title">
-                {title}
-              </h1>
-              <h4 className="news-subtitle">
-                {`${author} - ${new Date(publishedAt).toLocaleDateString()}`}
-              </h4>
-              <article className="news-content">
-                  <Markdown source={content}/>
-              </article>
-            </div>
-          </section>
-        </div>
-      );
-    }
   }
 }
 

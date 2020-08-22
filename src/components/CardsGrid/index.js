@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './index.css';
+import { GridWrapper } from './styles';
 
 class CardsGrid extends React.PureComponent {
   render() {
     const { children } = this.props;
 
     return (
-      <div className="grid-wrapper">
+      <GridWrapper>
         { children }
-      </div>
+      </GridWrapper>
     );
   }
 }

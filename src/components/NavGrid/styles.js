@@ -1,4 +1,6 @@
-.navigator {
+import styled from 'styled-components';
+
+export const Navigator = styled.div`
   display: grid;
   width: 100%;
   height: 90vh;
@@ -8,4 +10,4 @@
   gap: 40px max(20px, calc(25% - 150px));
   padding: 50px 20px 0;
   animation: bounce 2s linear;
-}
+`;

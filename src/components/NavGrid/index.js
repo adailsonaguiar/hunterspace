@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './index.css';
 import CardNavigation from './CardNavigation';
+import { Navigator } from './styles';
 
 class NavGrid extends React.PureComponent {
   render() {
     const { items, children } = this.props;
 
     return (
-      <div className="navigator">
+      <Navigator>
         {
           children || items.map(({ path, image, title }, i) => (
             <CardNavigation
@@ -19,7 +19,7 @@ class NavGrid extends React.PureComponent {
             />
           ))
         }
-      </div>
+      </Navigator>
     );
   }
 }

@@ -1,52 +1,49 @@
-.card-news {
-  width: 100%;
+import styled from 'styled-components';
+
+export const CardNew = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
   background: #212121;
   color: #61dafb;
   border: 1px solid #212121;
   border-radius: 5px;
   transition: border 0.4s;
-}
 
-.card-news span {
-  font-size: 1.3rem;
-}
-.card-news:hover {
-  border: 1px solid #61dafb;
-}
+  &:hover {
+    border: 1px solid #61dafb;
+  }
+`;
 
-.card-news .container-image {
+export const CardPreview = styled.img`
   width: 100%;
-  height: 22rem;
-  display: flex;
-}
-
-.card-preview {
-  width: 100%;
-  max-height: 500px;
+  height: min(500px, 22rem);
   object-fit: cover;
   border-radius: 5px 5px 0 0;
-}
+`;
 
-.card-content {
+export const Span = styled.span`
+  font-size: 1.3rem;
+`;
+
+export const CardContent = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
+`;
 
-.card-title {
+export const CardTitle = styled.h2`
   font-size: 1.6rem;
   font-weight: 700;
   color: #ff8000;
   font-family: Exo, sans-serif;
   margin-bottom: 10px;
-}
+`;
 
-.card-description {
+export const CardDescription = styled.p`
+  font-size: 1.3rem;
   color: #f5f5f5;
-  font-size: 1.4rem;
-}
+`;

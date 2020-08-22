@@ -1,13 +1,14 @@
 import React from 'react';
-import './Menu.css';
 import { Menu } from 'antd';
 import {
-  HomeOutlined,
-  SettingFilled,
+  HomeFilled,
+  RadarChartOutlined,
+  PictureFilled,
+  FileExclamationFilled,
   NodeExpandOutlined,
-  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { HeaderTag } from './styles';
 
 const { Item } = Menu;
 
@@ -27,28 +28,29 @@ export default class App extends React.Component {
   render() {
     const { current } = this.state;
     return (
-      <header className="site-header">
-        <Menu className="menu" selectedKeys={[current]} mode="horizontal">
-          <Item key="home" icon={<HomeOutlined />}>
+      <HeaderTag>
+        <Menu selectedKeys={[current]} mode="horizontal">
+          <Item key="home" icon={<HomeFilled />}>
             <Link to="/">Space Hunter</Link>
           </Item>
 
-          <Item key="universe" icon={<SettingFilled />}>
+          <Item key="universe" icon={<RadarChartOutlined />}>
             <Link to="/universe">Universe</Link>
           </Item>
 
-          <Item key="articles" icon={<NodeExpandOutlined />}>
+          <Item key="articles" icon={<FileExclamationFilled />}>
             <Link to="/news">Space News</Link>
           </Item>
 
-          <Item className="about" key="about" icon={<NodeExpandOutlined />}>
+          <Item key="apod" icon={<PictureFilled />}>
+            <Link to="/apod">Astronomy Picture</Link>
+          </Item>
+
+          <Item key="about" icon={<NodeExpandOutlined />}>
             <Link to="/about">About</Link>
           </Item>
-          <Item className="news" key="news" icon={<UnorderedListOutlined />}>
-            <Link to="/news">News</Link>
-          </Item>
         </Menu>
-      </header>
+      </HeaderTag>
     );
   }
 }
