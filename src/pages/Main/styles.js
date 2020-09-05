@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Content = styled.div`
   margin-top: 20px;
   width: 100%;
+  height: 100vh;
   animation: bounce 1s linear;
 `;
 
@@ -41,7 +42,7 @@ export const ApodVideo = styled.iframe`
     width: 100%;
     margin-top: 20px;
   }
-`
+`;
 export const ApodInfo = styled.div`
   display: flex;
   flex-direction: column;
